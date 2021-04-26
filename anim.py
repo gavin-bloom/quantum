@@ -60,7 +60,8 @@ def main():
     states = []
     #ts = linspace(0,(pi*x*(1/30)),int((pi*x*(1/3))))
     ts = linspace(0,2.1,21)
-    for t in ts:
+    grovers = [0, ((pi - 2*arccos(x))/(2*x*(np.sqrt(1-(x**2))))), 2*((pi - 2*arccos(x))/(2*x*(np.sqrt(1-(x**2))))), 3*((pi - 2*arccos(x))/(2*x*(np.sqrt(1-(x**2)))))]
+    for t in grovers:
         t = scale_t(x,E,t)
         states.append(fenner(E,t).unit())
     animate_bloch(states, duration=0.2, save_all=False)
