@@ -42,8 +42,9 @@ def main():
     states = []
     x = 1 / (np.sqrt(2))
     #ts = linspace(0,(pi*x*(1/30)),int((pi*x*(1/3))))
-    ts = linspace(0,pi,21)
+    ts = linspace(0,1,10)
     for t in ts:
+        t = t * pi * x * (1/30)
         states.append((np.exp(-3j*t)*((x*cos(3*x*t)- 1j*sin(3*x*t))*basis(2,0) + x*cos(3*x*t)*basis(2,1))).unit())
     animate_bloch(states, duration=0.1, save_all=False)
 
