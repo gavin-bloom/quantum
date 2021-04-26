@@ -10,7 +10,7 @@ def animate_bloch(states, duration=0.05, save_all=False):
     b = Bloch()
     b.xlabel = ['$\\left|+\\right>$', '$\\left|-\\right>$']
     b.ylabel = ['$\\left|i\\right>$','$\\left|-i\\right>$']
-    b.zlabel = ['$\\left|0\\right>$', '$\\left|1\\right>$']
+    b.zlabel = ['$\\left|1\\right>$', '$\\left|0\\right>$']
 
     b.vector_color = ['r']
     b.view = [-40,30]
