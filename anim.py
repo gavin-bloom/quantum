@@ -5,7 +5,7 @@ from qutip import *
 from matplotlib import cm
 import imageio
 
-def animate_bloch(states, duration=0.05, save_all=False):
+def animate_bloch(states, duration=0.1, save_all=False):
 
     b = Bloch()
 
@@ -47,6 +47,6 @@ def main():
     for t in ts:
         t = t * pi * x * (1/30)
         states.append((np.exp(-3j*t)*((x*cos(3*x*t)- 1j*sin(3*x*t))*basis(2,1) + x*cos(3*x*t)*basis(2,0))).unit())
-    animate_bloch(states, duration=0.05, save_all=False)
+    animate_bloch(states, duration=0.1, save_all=False)
 
 main()
