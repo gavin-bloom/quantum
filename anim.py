@@ -12,14 +12,14 @@ def farhi_gutman(x,E,t):
     return (np.exp(E*-1j*t)*((x*cos(E*x*t)- 1j*sin(E*x*t))*basis(2,0) + x*cos(E*x*t)*basis(2,1)))
 
 def scale_t(x,E,t):
-    return t * pi * (1/x) * (1/(2*E*10))
+    return t * 10 * pi * (1/x) * (1/(2*E*10))
 
-def animate_bloch(states, duration=0.05, save_all=False):
+def animate_bloch(states, duration=0.2, save_all=False):
 
     b = Bloch()
     b.xlabel = ['$\\left|+\\right>$', '$\\left|-\\right>$']
     b.ylabel = ['$\\left|i\\right>$','$\\left|-i\\right>$']
-    b.zlabel = ['$\\left|0\\right>$', '$\\left|1\\right>$']
+    b.zlabel = ['$\\left|1\\right>$', '$\\left|0\\right>$']
     
     b.add_states([farhi_gutman(x,E,0),farhi_gutman(x,E,scale_t(x,E,10))])
 
@@ -60,6 +60,6 @@ def main():
     for t in ts:
         t = scale_t(x,E,t)
         states.append(farhi_gutman(x,E,t).unit())
-    animate_bloch(states, duration=0.05, save_all=False)
+    animate_bloch(states, duration=0.2, save_all=False)
 
 main()
