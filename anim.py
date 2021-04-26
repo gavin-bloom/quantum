@@ -43,7 +43,7 @@ def animate_bloch(states, duration=0.05, save_all=False):
     imageio.mimsave('bloch_anim.gif', images, duration=duration)
 
 def farhi_gutman(x,E,t):
-    return (np.exp(E*-1j*t)*((x*cos(E*x*t)- 1j*sin(E*x*t))*basis(2,0) + x*cos(E*x*t)*basis(2,1)))
+    return (np.exp(E*-1j*t)*((x*cos(E*x*t)- 1j*sin(E*x*t))*basis(2,1) + x*cos(E*x*t)*basis(2,0)))
 
 def scale_t(x,E,t):
     return t * pi * (1/x) * (1/(2*E*10))
