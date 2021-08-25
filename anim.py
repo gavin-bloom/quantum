@@ -8,6 +8,7 @@ import imageio
 x = 1 / (np.sqrt(2))
 E = 1
 
+#switch down below to swap from fenner to farhi+gutman continuous search hamiltonians
 def farhi_gutman(x,E,t):
     return (np.exp(E*-1j*t)*((x*cos(E*x*t)- 1j*sin(E*x*t))*basis(2,0) + x*cos(E*x*t)*basis(2,1)))
 
@@ -17,6 +18,7 @@ def fenner(E,t):
 def scale_t(x,E,t):
     return t * 10 * pi * (1/x) * (1/(2*E*10))
 
+#function to draw bloch+points+move pointer
 def animate_bloch(states, duration=0.2, save_all=False):
 
     b = Bloch()
@@ -34,11 +36,11 @@ def animate_bloch(states, duration=0.2, save_all=False):
     except:
         length = 1
         states = [states]
-    ## normalize colors to the length of data ##
+    #normalize colors to the length of data 
     nrm = mpl.colors.Normalize(0,length)
     colors = cm.cool(nrm(range(length))) # options: cool, summer, winter, autumn etc.
 
-    ## customize sphere properties ##
+    #customize sphere properties 
     b.point_color = list(colors) # options: 'r', 'g', 'b' etc.
     b.point_marker = ['o']
     b.point_size = [30]
@@ -63,6 +65,7 @@ def main():
     grovers = [0, ((pi - 2*arccos(x))/(2*x*(np.sqrt(1-(x**2))))), 2*((pi - 2*arccos(x))/(2*x*(np.sqrt(1-(x**2))))), 3*((pi - 2*arccos(x))/(2*x*(np.sqrt(1-(x**2)))))]
     for t in grovers:
         t = scale_t(x,E,t)
+        #here is where fenner/farhi gutman is called to calculate where to place points
         states.append(fenner(E,t).unit())
     animate_bloch(states, duration=0.2, save_all=False)
 
