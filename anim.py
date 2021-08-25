@@ -1,12 +1,31 @@
 import matplotlib as mpl
 from pylab import *
+import numpy as np
 from qutip import *
 from matplotlib import cm
 import imageio
 
-def animate_bloch(states, duration=0.1, save_all=False):
+x = 1 / (np.sqrt(2))
+E = 1
+
+def farhi_gutman(x,E,t):
+    return (np.exp(E*-1j*t)*((x*cos(E*x*t)- 1j*sin(E*x*t))*basis(2,0) + x*cos(E*x*t)*basis(2,1)))
+
+def fenner(E,t):
+    return ((1/(np.sqrt(2)))*((np.exp(E*t)+np.exp(E*2*t)*basis(2,0))+(np.exp(E*t)+1)*basis(2,1)))
+
+def scale_t(x,E,t):
+    return t * 10 * pi * (1/x) * (1/(2*E*10))
+
+def animate_bloch(states, duration=0.2, save_all=False):
 
     b = Bloch()
+    b.xlabel = ['$\\left|+\\right>$', '$\\left|-\\right>$']
+    b.ylabel = ['$\\left|i\\right>$','$\\left|-i\\right>$']
+    b.zlabel = ['$\\left|1\\right>$', '$\\left|0\\right>$']
+    
+    #b.add_states([farhi_gutman(x,E,0),farhi_gutman(x,E,scale_t(x,E,10))])
+
     b.vector_color = ['r']
     b.view = [-40,30]
     images=[]
@@ -35,13 +54,16 @@ def animate_bloch(states, duration=0.1, save_all=False):
             filename='temp_file.png'
             b.save(filename)
         images.append(imageio.imread(filename))
-    imageio.mimsave('bloch_anim.gif', images, duration=duration)
+    imageio.mimsave('bloch_anim2.gif', images, duration=duration)
 
 def main():
     states = []
-    thetas = linspace(0,pi,21)
-    for theta in thetas:
-        states.append((cos(theta/2)*basis(2,0) + sin(theta/2)*basis(2,1)).unit())
-    animate_bloch(states, duration=0.1, save_all=False)
+    #ts = linspace(0,(pi*x*(1/30)),int((pi*x*(1/3))))
+    ts = linspace(0,2.1,21)
+    grovers = [0, ((pi - 2*arccos(x))/(2*x*(np.sqrt(1-(x**2))))), 2*((pi - 2*arccos(x))/(2*x*(np.sqrt(1-(x**2))))), 3*((pi - 2*arccos(x))/(2*x*(np.sqrt(1-(x**2)))))]
+    for t in grovers:
+        t = scale_t(x,E,t)
+        states.append(fenner(E,t).unit())
+    animate_bloch(states, duration=0.2, save_all=False)
 
 main()
